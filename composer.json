@@ -1,0 +1,10 @@
+{
+    "name": "klara-iva/php-framework",
+    "description": "My PHP framework",
+    "autoload": {
+        "psr-4": {
+            "Src\\": "src/"
+        }
+    },
+    "require": {}
+}

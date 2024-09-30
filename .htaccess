@@ -1,0 +1,23 @@
+RewriteEngine On
+RewriteBase /php-framework/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [L]
+
+
+
+
+
+# question
+# why adding this code:
+
+#<IfModule mod_rewrite.c>
+#RewriteEngine On
+#RewriteBase /php-framework/
+#RewriteRule ^index\.php$ - [L]
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule . /index.php [L]
+#</IfModule>
+
+# redirects to  "http://localhost/dashboard/"?
