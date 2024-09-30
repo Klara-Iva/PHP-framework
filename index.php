@@ -1,24 +1,19 @@
 <?php
 
+require 'vendor/autoload.php';
 
+use Src\Request;
+use Src\Response;
 
-$requestUri = $_SERVER['REQUEST_URI'];
-$requestUri = str_replace('/php-framework', '', $requestUri);
+$router = require 'routes.php';
 
+$request = new Request($_GET, $_POST);
 
-switch ($requestUri) {
-    case '/':
-        echo 'Test page 1';
-        break;
-    case '/about':
-        echo 'Test page 2';
-        break;
-   
+$url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); 
+$url = str_replace('/php-framework', '', $url);
 
+$method = $_SERVER['REQUEST_METHOD'];
+$content = $router->resolve($url, $method);
 
-
-    default:
-        http_response_code(404);
-        echo '404 Not Found :D';
-        break;
-}
+$response = new Response($content);
+echo $response->send();

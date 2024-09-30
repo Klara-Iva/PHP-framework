@@ -5,10 +5,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.php [L]
 
 
-
-
-
-# question
+# Q:
 # why adding this code:
 
 #<IfModule mod_rewrite.c>
@@ -20,4 +17,4 @@ RewriteRule ^ index.php [L]
 #RewriteRule . /index.php [L]
 #</IfModule>
 
-# redirects to  "http://localhost/dashboard/"?
+# redirects to  "http://localhost/dashboard/" which is xampps homepage?
