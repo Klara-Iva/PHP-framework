@@ -2,14 +2,16 @@
 
 use Src\Router;
 
-$router = new Router();
-
-$router->addRoute('/', 'GET', function () {
-    return "Deafult page";
+Router::get('/', function () {
+    return "Default page";
 });
 
-$router->addRoute('/about', 'GET', function () {
+Router::get('/about', function () {
     return "About page";
 });
 
-return $router;
+Router::post('/submit', function () {
+    return "Form submitted.";
+});
+
+return Router::class; 

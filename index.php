@@ -4,6 +4,7 @@ require 'vendor/autoload.php';
 
 use Src\Request;
 use Src\Response;
+use Src\Router;
 
 $router = require 'routes.php';
 
@@ -14,8 +15,6 @@ $url = str_replace('/php-framework', '', $url);
 
 $method = $_SERVER['REQUEST_METHOD'];
 
-$content = $router->resolve($url, $method);
-
+$content = Router::resolve($url, $method);
 $response = new Response($content);
-
 echo $response->send();

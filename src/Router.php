@@ -4,22 +4,31 @@ namespace Src;
 
 class Router
 {
-    private $routes = [];
+    private static $routes = [];
 
-    public function addRoute(string $url, string $method, callable $callback)
+    public static function get(string $url, callable $callback)
     {
-        $this->routes[] = [
+         self::$routes[] = [
             'url' => $url,
-            'method' => $method,
+            'method' => 'GET',
             'callback' => $callback,
         ];
     }
 
-    public function resolve(string $url, string $method)
+    public static function post(string $url, callable $callback)
     {
-        foreach ($this->routes as $route) {
+        self::$routes[] = [
+            'url'=> $url,
+            'method'=> 'POST',
+            'callback'=> $callback,
+        ];
+    }
+
+    public static function resolve(string $url, string $method)
+    {
+        foreach (self::$routes as $route) {
             if ($route['url'] === $url && $route['method'] === $method) {
-                return $route['callback']();
+                return call_user_func($route['callback']);
             }
 
         }
