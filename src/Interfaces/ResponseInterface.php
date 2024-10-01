@@ -2,6 +2,7 @@
 
 namespace Src\Interfaces;
 
-interface ResponseInterface {
+interface ResponseInterface
+{
     public function send(): string;
 }
