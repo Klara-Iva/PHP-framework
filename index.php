@@ -5,6 +5,7 @@ require 'vendor/autoload.php';
 use Src\Request;
 use Src\Response;
 use Src\Router;
+use Src\JsonResponse;
 
 $router = require 'routes.php';
 
@@ -16,5 +17,9 @@ $url = str_replace('/php-framework', '', $url);
 $method = $_SERVER['REQUEST_METHOD'];
 
 $content = Router::resolve($url, $method);
-$response = new Response($content);
-echo $response->send();
+if ($content instanceof JsonResponse) {
+    echo $content->send();
+} else {
+    $response = new Response($content);
+    echo $response->send();
+}
