@@ -13,10 +13,10 @@ class JsonResponse implements ResponseInterface
         $this->content = $content;
     }
 
-    public function send(): string
+    public function send(): void
     {
         header('Content-Type: application/json');
-        return json_encode($this->content);
+        echo json_encode($this->content);
     }
 
 }

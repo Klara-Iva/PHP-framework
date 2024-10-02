@@ -13,9 +13,9 @@ class Response implements ResponseInterface
         $this->content = $content;
     }
 
-    public function send(): string
+    public function send(): void
     {
-        return $this->content;
+        echo (string)$this->content;
     }
 
 }

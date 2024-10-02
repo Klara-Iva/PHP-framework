@@ -2,13 +2,22 @@
 
 namespace Src;
 
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
+
 class IndexController
 {
     private $twig;
 
-    public function __construct(Twig $twig)
+    public function __construct(){}
+
+    private function getTwig(): Environment
     {
-        $this->twig = $twig;
+        if ($this->twig === null) {
+            $loader = new FilesystemLoader('templates');
+            $this->twig = new Environment($loader);
+        }
+        return $this->twig;
     }
 
     public function indexAction()
@@ -23,7 +32,8 @@ class IndexController
 
     public function indexTwigAction()
     {
-        return $this->twig->render('welcome.html');
+        $twig = $this->getTwig();
+        return $twig->render('welcome.html');
     }
 
 }
