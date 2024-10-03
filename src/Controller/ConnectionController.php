@@ -1,44 +1,42 @@
 <?php
 
-namespace Src\Conntroller;
+namespace Src\Controller;
 
 use PDO;
 use PDOException;
-use Src\Database\Connection;
 
-class ConnectionController{
-
+class ConnectionController
+{
     private static $instance = null;
     private $pdo;
 
-    private function __construct() //private constructor so none can directly make a new instance
+    private function __construct()
     {
-        $dsn = 'mysql:host=localhost; dbname=database_name';
-        $username = 'username';
-        $password = 'password';
+        $dsn = 'mysql:host=localhost;dbname=php-frameworkDB';
+        $username = 'root';
+        $password = '';
 
-        try {//error handling
-            $conn = new PDO($dsn, $username, $password);
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        try {
+            $this->pdo = new PDO($dsn, $username, $password);
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             echo "Connected successfully";
         } catch (PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
         }
-
     }
 
-    public static function getInstance(): Connection //fetches existing instance or makes a new one, SINGLETON
+    public static function getInstance(): ConnectionController
     {
         if (self::$instance === null) {
-            self::$instance = new Connection();
+            self::$instance = new ConnectionController();
         }
 
         return self::$instance;
     }
 
-    public function getPdo()
+    public function getPdo(): PDO
     {
         return $this->pdo;
     }
-    
+
 }
