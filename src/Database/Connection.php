@@ -3,12 +3,16 @@
 namespace Src\Database;
 
 use PDO;
-use PDOException;
 
 class Connection
 {
-    public $pdo = ConnectionController::getPdo();
-
+   public $pdo;
+    
+    public function __construct()
+    {
+        $this->pdo = ConnectionController::getInstance()->getPdo(); 
+    }
+    
     public function fetchAssoc(string $query, array $params)
     {
         // this doesnt work if associative array is specifically like: $params = [0 => "sun",1 => "moon",2 => "pluto"];
