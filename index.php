@@ -1,18 +1,11 @@
 <?php
 
 require 'vendor/autoload.php';
+require 'routes.php';
 
-use Src\Request;
-use Src\Router;
-
-$router = require 'routes.php';
+use Src\Request\Request;
+use Src\Routing\Router;
 
 $request = new Request();
-
-$url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$url = str_replace('/php-framework', '', $url);
-
-$method = $_SERVER['REQUEST_METHOD'];
-
-$content = Router::resolve($url, $method);
+$content = Router::resolve($request);
 $content->send();

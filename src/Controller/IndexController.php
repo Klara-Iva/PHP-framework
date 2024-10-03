@@ -1,9 +1,10 @@
 <?php
 
-namespace Src;
+namespace Src\Controller;
 
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
+use Src\Response\JsonResponse;
 
 class IndexController
 {
@@ -17,6 +18,7 @@ class IndexController
             $loader = new FilesystemLoader('templates');
             $this->twig = new Environment($loader);
         }
+        
         return $this->twig;
     }
 

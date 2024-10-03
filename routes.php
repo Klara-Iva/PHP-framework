@@ -1,8 +1,8 @@
 <?php
 
-use Src\Route;
-use Src\IndexController;
-use Src\JsonResponse;
+use Src\Routing\Route;
+use Src\Controller\IndexController;
+use Src\Response\JsonResponse;
 
 Route::get('/', function () {
     return "Default page";

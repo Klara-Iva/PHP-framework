@@ -1,12 +1,19 @@
 <?php
 
-namespace Src;
+namespace Src\Routing;
+
+use Src\Routing\Route;
+use Src\Request\Request;
+use Src\Response\Response;
 
 class Router
 {
-    public static function resolve(string $url, string $method)
+    public static function resolve(Request $request)
     {
         $routes = Route::getRoutes();
+
+        $url = $request->getUrl();
+        $method = $request->getMethod();
 
         foreach ($routes as $route) {
             $pattern = preg_replace('/\{([a-zA-Z0-9_]+)\}/', '([0-9]+)', $route['url']);
@@ -22,13 +29,8 @@ class Router
                 } else {
                     $content = call_user_func_array($callback, $matches);
                 }
-
-                if ($content instanceof JsonResponse) {
-                    return $content;
-                }
-                else{
-                    return new Response($content);
-                }
+                
+                return new Response($content);              
             }
 
         }

@@ -1,10 +1,10 @@
 <?php
 
-namespace Src;
+namespace Src\Response;
 
 use Src\Interfaces\ResponseInterface;
 
-class Response implements ResponseInterface
+class JsonResponse implements ResponseInterface
 {
     private $content;
 
@@ -15,7 +15,8 @@ class Response implements ResponseInterface
 
     public function send(): void
     {
-        echo (string)$this->content;
+        header('Content-Type: application/json');
+        echo json_encode($this->content);
     }
 
 }
