@@ -19,7 +19,7 @@ class Connection
         try {
             $this->pdo = new PDO($dsn, $username, $password);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            echo "Connection to databse successful" . PHP_EOL;
+            echo "Connection to database successful" . PHP_EOL;
         } catch (PDOException $e) {
             echo "Connection to  database failed: " . $e->getMessage();
         }   
@@ -49,9 +49,9 @@ class Connection
 
     public function fetchAssocAll(string $query, array $params)
     {
-        $limitPattern = '/LIMIT\s+(\d+)(?:,\s*(\d+))?/i'; // "LIMIT 10, 5" ->return 10 results with offset 5
+        $limitPattern = '/LIMIT\s+(\d+)(?:,\s*(\d+))?/i'; 
         if (preg_match($limitPattern, $query, $matches)) {
-            $limitCount = isset($matches[1]) ? (int) $matches[1] : 0; // rounding it to int or 0 if doesnt exist
+            $limitCount = isset($matches[1]) ? (int) $matches[1] : 0;
             $offset = isset($matches[2]) ? (int) $matches[2] : 0;
         } else {
             $limitCount = 0;
