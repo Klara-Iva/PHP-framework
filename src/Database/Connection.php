@@ -7,7 +7,38 @@ use PDOException;
 
 class Connection
 {
-    public $pdo = ConnectionController::getPdo();
+    private static $instance = null;
+    public $pdo;
+   
+    public function __construct()
+    {
+        $dsn = 'mysql:host=localhost;dbname=php-frameworkDB';
+        $username = 'root';
+        $password = '';
+
+        try {
+            $this->pdo = new PDO($dsn, $username, $password);
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            echo "Connection to databse successful" . PHP_EOL;
+        } catch (PDOException $e) {
+            echo "Connection to  database failed: " . $e->getMessage();
+        }   
+
+    }
+
+    public static function getInstance(): self
+    {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
+
+    public function getPdo(): PDO
+    {
+        return $this->pdo;
+    }
 
     public function fetchAssoc(string $query, array $params)
     {
@@ -66,8 +97,10 @@ class Connection
                 $this->executeQuery($table, $data);
             }
 
+            return $this->pdo->lastInsertId();
         }
 
+        return null;
     }
 
     public function update(string $table, array $data, array $conditions)

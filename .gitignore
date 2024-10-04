@@ -1,5 +1,5 @@
 /vendor
 /composer.lock
-/test_connection.php
-/test_user_connection.php
 /src/Models
+/test_user_connection.php
+/user_database.php
