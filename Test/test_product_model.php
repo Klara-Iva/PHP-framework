@@ -11,4 +11,4 @@ $user->save();
 $array = $user->toArray();
 $user = Product::find(1);
 $user->name = 'Product 2';
-$user->update();
+$user->update(1);

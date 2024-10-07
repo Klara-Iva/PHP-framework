@@ -3,6 +3,7 @@
 use Src\Routing\Route;
 use Src\Controller\IndexController;
 use Src\Response\JsonResponse;
+use Src\Models\User;
 
 Route::get('/', function () {
     return "Default page";
@@ -35,3 +36,8 @@ Route::get('/api/v1/products/{productId}/reviews/{reviewId}', function ($product
 Route::get('/home', [IndexController::class, 'indexAction']);
 Route::get('/home/json', [IndexController::class, 'indexJsonAction']);
 Route::get('/home/twig', [IndexController::class, 'indexTwigAction']);
+
+Route::get('/user/create', [User::class, 'create']);
+Route::get('/user/{id}', [User::class, 'read']);
+Route::get('/user/update/{id}', [User::class, 'update']);
+Route::get('/user/delete/{id}', [User::class, 'delete']);

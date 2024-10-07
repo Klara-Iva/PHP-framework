@@ -32,7 +32,7 @@ class Model
         }
     }
 
-    public function update()
+    public function update($id)
     {
         if (is_null($this->id)) {
             throw new Exception('Cannot update record without primary key being set what ID it should use.');
@@ -48,13 +48,32 @@ class Model
         $result = $db->fetchAssoc($query, ['primaryKey' => $primaryKeyValue]);
 
         if ($result) {
-            echo 'The requested ID was found in the database' . PHP_EOL;
+            echo 'The requested ID was found in the database.' . PHP_EOL;
             $instance->attributes = $result;
             $instance->id = $result[$instance->primaryKeyName];
             return $instance;
         }
 
         return null;
+    }
+
+    public function delete(string $id)
+    {
+        $this->id = $id;
+        if (is_null($this->id)) {
+            throw new Exception("Cannot delete record without a primary key value.");
+        }
+
+        $query = "DELETE FROM {$this->table} WHERE {$this->primaryKeyName} = :primaryKey LIMIT 1";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(':primaryKey', $this->id);
+        $stmt->execute();
+        echo 'Deletion sucessful.' . PHP_EOL;
+        if ($stmt->rowCount() > 0) {
+            return true;
+        }
+
+        return false;
     }
 
     public function toArray()

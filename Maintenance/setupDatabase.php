@@ -16,7 +16,7 @@ try {
             id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
             first_name VARCHAR(100),
             last_name VARCHAR(100),
-            dob DATE DEFAULT NULL,
+            birthday DATE DEFAULT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
         );";

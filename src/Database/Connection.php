@@ -19,7 +19,7 @@ class Connection
         try {
             $this->pdo = new PDO($dsn, $username, $password);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            echo "Connection to database successful" . PHP_EOL;
+            echo "Connection to database successful." . PHP_EOL;
         } catch (PDOException $e) {
             echo "Connection to  database failed: " . $e->getMessage();
         }   
