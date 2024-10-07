@@ -42,13 +42,13 @@ class Model
 
     public static function find(string $primaryKeyValue)
     {
+        $db = Connection::getInstance();
         $instance = new static();
         $query = "SELECT * FROM {$instance->table} WHERE {$instance->primaryKeyName} = :primaryKey LIMIT 1";
-        $stmt = $instance->pdo->prepare($query);
-        $stmt->execute(['primaryKey' => $primaryKeyValue]);
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $result = $db->fetchAssoc($query, ['primaryKey' => $primaryKeyValue]);
 
         if ($result) {
+            echo 'The requested ID was found in the database' . PHP_EOL;
             $instance->attributes = $result;
             $instance->id = $result[$instance->primaryKeyName];
             return $instance;
