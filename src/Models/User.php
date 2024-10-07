@@ -40,9 +40,10 @@ class User extends Model
 
     }
 
-    public function update($id)
+    public function update(string $id)
     {
-        $user = User::find($id);
+        $this->id = $id;
+        $user = User::find($this->id);
 
         if ($user) {
             $first_name = $_GET['first_name'] ?? null;

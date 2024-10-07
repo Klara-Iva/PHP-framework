@@ -12,5 +12,3 @@ $array = $user->toArray();
 $user->save();
 $array = $user->toArray();
 $user = User::find(1);
-$user->birthday = '2000-11-06';
-//$user->update();

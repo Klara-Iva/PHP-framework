@@ -32,7 +32,7 @@ class Model
         }
     }
 
-    public function update($id)
+    public function update(string $id)
     {
         if (is_null($this->id)) {
             throw new Exception('Cannot update record without primary key being set what ID it should use.');
@@ -59,7 +59,7 @@ class Model
 
     public function delete(string $id)
     {
-        $this->id = $id;
+        $this->id= $id;
         if (is_null($this->id)) {
             throw new Exception("Cannot delete record without a primary key value.");
         }
