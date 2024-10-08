@@ -5,16 +5,21 @@ namespace Src\Routing;
 
 class Route
 {
-    private static $routes = []; 
+    private static $routes = [];
 
-    public static function get(string $url, callable | array $callback)
+    public static function get(string $url, callable|array $callback)
     {
         self::addRoute('GET', $url, $callback);
     }
 
-    public static function post(string $url, callable | array $callback)
+    public static function post(string $url, callable|array $callback)
     {
         self::addRoute('POST', $url, $callback);
+    }
+
+    public static function delete(string $url, callable|array $callback)
+    {
+        self::addRoute('DELETE', $url, $callback);
     }
 
     private static function addRoute($method, $url, $callback)
@@ -28,7 +33,7 @@ class Route
 
     public static function getRoutes()
     {
-        return self::$routes; 
+        return self::$routes;
     }
 
 }

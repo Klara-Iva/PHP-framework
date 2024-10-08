@@ -36,6 +36,15 @@ class Request implements RequestInterface
         return $this->post;
     }
 
+    public function delete($key = null)
+    {
+        if ($key) {
+            return isset($this->post[$key]) ? $this->post[$key] : null;
+        }
+
+        return $this->post;
+    }
+    
     public function getUrl()
     {
         return str_replace('/php-framework', '', $this->url);  

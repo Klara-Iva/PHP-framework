@@ -1,10 +1,10 @@
 <?php
 
+use Src\Controller\UserController;
+use Src\Controller\ProductController;
 use Src\Routing\Route;
 use Src\Controller\IndexController;
 use Src\Response\JsonResponse;
-use Src\Models\User;
-use Src\Models\Product;
 
 Route::get('/', function () {
     return "Default page";
@@ -38,12 +38,12 @@ Route::get('/home', [IndexController::class, 'indexAction']);
 Route::get('/home/json', [IndexController::class, 'indexJsonAction']);
 Route::get('/home/twig', [IndexController::class, 'indexTwigAction']);
 
-Route::get('/user/create', [User::class, 'create']);
-Route::get('/user/{id}', [User::class, 'read']);
-Route::get('/user/update/{id}', [User::class, 'update']);
-Route::get('/user/delete/{id}', [User::class, 'delete']);
+Route::post('/user/create', [UserController::class, 'create']);
+Route::get('/user/{id}', [UserController::class, 'read']);
+Route::post('/user/update/{id}', [UserController::class, 'update']);
+Route::delete('/user/delete/{id}', [UserController::class, 'delete']);
 
-Route::post('/product/create', [Product::class, 'create']);
-Route::post('/product/{id}', [Product::class, 'read']);
-Route::post('/product/update/{id}', [Product::class, 'update']);
-Route::post('/product/delete/{id}', [Product::class, 'delete']);
+Route::post('/product/create', [ProductController::class, 'create']);
+Route::get('/product/{id}', [ProductController::class, 'read']);
+Route::post('/product/update/{id}', [ProductController::class, 'update']);
+Route::delete('/product/delete/{id}', [ProductController::class, 'delete']);

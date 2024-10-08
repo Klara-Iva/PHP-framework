@@ -11,7 +11,6 @@ class Router
     public static function resolve(Request $request)
     {
         $routes = Route::getRoutes();
-
         $url = $request->getUrl();
         $method = $request->getMethod();
 
@@ -25,12 +24,12 @@ class Router
                     $controllerClass = $callback[0];
                     $method = $callback[1];
                     $controller = new $controllerClass();
-                    $content = call_user_func_array([$controller, $method], $matches);
+                    $content = call_user_func_array([$controller, $method], array_merge($matches, [$request]));
                 } else {
                     $content = call_user_func_array($callback, $matches);
                 }
-                
-                return new Response($content);              
+
+                return new Response($content);
             }
 
         }
