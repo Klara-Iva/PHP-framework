@@ -16,9 +16,7 @@ try {
             id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
             first_name VARCHAR(100),
             last_name VARCHAR(100),
-            birthday DATE DEFAULT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+            birthday DATE DEFAULT NULL
         );";
         $pdo->exec($createUsersTable);
         echo "Table 'users' created successfully." . PHP_EOL;
@@ -32,9 +30,7 @@ try {
             id INT AUTO_INCREMENT PRIMARY KEY,
             name VARCHAR(255),
             description TEXT,
-            price DECIMAL(10, 2),
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+            price DECIMAL(10, 2)
         );";
         $pdo->exec($createProductsTable);
         echo "Table 'products' created successfully." . PHP_EOL;
@@ -44,5 +40,4 @@ try {
 
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();
-
 }

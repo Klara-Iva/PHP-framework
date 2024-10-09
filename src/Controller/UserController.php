@@ -56,7 +56,7 @@ class UserController
         echo json_encode($user->toArray());
     }
 
-    public function update(string $id, Request $request)//ne radi
+    public function update(string $id, Request $request)
     {
         if (!$id) {
             echo "ID is required!";

@@ -9,7 +9,7 @@ class Connection
 {
     private static $instance = null;
     public $pdo;
-   
+
     public function __construct()
     {
         $dsn = 'mysql:host=localhost;dbname=php-frameworkDB';
@@ -19,10 +19,10 @@ class Connection
         try {
             $this->pdo = new PDO($dsn, $username, $password);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            echo "Connection to database successful." . PHP_EOL;
+
         } catch (PDOException $e) {
             echo "Connection to  database failed: " . $e->getMessage();
-        }   
+        }
 
     }
 
@@ -49,7 +49,7 @@ class Connection
 
     public function fetchAssocAll(string $query, array $params)
     {
-        $limitPattern = '/LIMIT\s+(\d+)(?:,\s*(\d+))?/i'; 
+        $limitPattern = '/LIMIT\s+(\d+)(?:,\s*(\d+))?/i';
         if (preg_match($limitPattern, $query, $matches)) {
             $limitCount = isset($matches[1]) ? (int) $matches[1] : 0;
             $offset = isset($matches[2]) ? (int) $matches[2] : 0;
