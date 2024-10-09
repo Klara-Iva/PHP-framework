@@ -10,45 +10,32 @@ class UserController
 {
     public function create(Request $request)
     {
-        $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
+        $first_name = $request->get('first_name') ?? null;
+        $last_name = $request->get('last_name') ?? null;
+        $birthday = $request->get('birthday') ?? null;
 
-        if (strpos($contentType, 'application/json') !== false) {
-            $data = json_decode(file_get_contents('php://input'), true);
-            $first_name = $data['first_name'] ?? null;
-            $last_name = $data['last_name'] ?? null;
-            $birthday = $data['birthday'] ?? null;
-        } else {
-            $first_name = $request->post('first_name') ?? null;
-            $last_name = $request->post('last_name') ?? null;
-            $birthday = $request->post('birthday') ?? null;
-        }
-        // TODO for later, make an array for all string attributes and check with foreach if all are strings
-        if (empty($first_name)) {
-            echo "First name is mandatory.";
-            return;
-        }
-        if (!is_string($first_name)) {
-            echo "First name must be a string.";
-            return;
-        }
+        $data = [
+            'first name' => $first_name,
+            'last name' => $last_name,
+        ];
 
-        if (empty($last_name)) {
-            echo "Last name is mandatory.";
-            return;
-        }
-        if (!is_string($last_name)) {
-            echo "Last name must be a string.";
-            return;
+        foreach ($data as $key => $value) {
+            if (empty($value) || !is_string($value)) {
+                echo ucfirst($key) . " is mandatory and must be a valid string.";
+                return;
+            }
         }
 
         if (empty($birthday)) {
             echo "Birthday is mandatory.";
             return;
         }
+
         if (!DateTime::createFromFormat('Y-m-d', $birthday)) {
-            echo "Birthday is in wrong date format.";
+            echo "Birthday is in wrong date format, right format is YYYY-MM-DD.";
             return;
         }
+
         $user = new User();
         $user->first_name = $first_name;
         $user->last_name = $last_name;
@@ -61,58 +48,72 @@ class UserController
     {
         $user = User::find($id);
 
-        if ($user) {
-            echo json_encode($user->toArray());
-        } else {
+        if (!$user) {
             echo "User not found!";
+            return;
         }
 
+        echo json_encode($user->toArray());
     }
 
-    public function update(string $id, Request $request)
+    public function update(string $id, Request $request)//ne radi
     {
-        $user = User::find($id);
-
-        if ($user) {
-            $first_name = $request->post("first_name") ?? null;
-            $last_name = $request->post("last_name") ?? null;
-            $birthday = $request->post("birthday") ?? null;
-
-            if ($first_name !== null && is_string($first_name)) {
-                $user->first_name = $first_name;
-            }
-
-            if ($last_name !== null && is_string($last_name)) {
-                $user->last_name = $last_name;
-            }
-
-            if ($birthday !== null) {
-                if (!DateTime::createFromFormat('Y-m-d', $birthday)) {
-                    echo "Birthday is in wrong date format.";
-                    return;
-                } else {
-                    $user->birthday = $birthday;
-                }
-
-            }
-
-            $user->save();
-            echo "User updated successfully!";
-        } else {
-            echo "User not found!";
+        if (!$id) {
+            echo "ID is required!";
+            return;
         }
 
+        $user = User::find($id);
+
+        if (!$user) {
+            echo "User not found!";
+            return;
+        }
+
+        $first_name = $request->get("first_name") ?? $user->first_name;
+        $last_name = $request->get("last_name") ?? $user->last_name;
+        $birthday = $request->get("birthday") ?? $user->birthday;
+
+        if (empty($first_name) || !is_string($first_name)) {
+            echo "First name is mandatory and must be a valid string.";
+            return;
+        }
+
+        if (empty($last_name) || !is_string($last_name)) {
+            echo "Last name is mandatory and must be a valid string.";
+            return;
+        }
+
+        $user->first_name = $first_name;
+        $user->last_name = $last_name;
+
+        if ($birthday !== null) {
+            if (!DateTime::createFromFormat('Y-m-d', $birthday)) {
+                echo "Birthday is in wrong date format, requested format is YYYY-MM-DD.";
+                return;
+            }
+            $user->birthday = $birthday;
+        }
+
+        $user->save();
+        echo "User updated successfully!";
     }
 
     public function delete(string $id)
     {
+        if (!$id) {
+            echo "ID is required!";
+            return;
+        }
+
         $user = User::find($id);
 
-        if ($user) {
-            $user->delete($id);
-        } else {
+        if (!$user) {
             echo "Could not delete user, user not found!";
+            return;
         }
+
+        $user->delete($id);
 
     }
 
